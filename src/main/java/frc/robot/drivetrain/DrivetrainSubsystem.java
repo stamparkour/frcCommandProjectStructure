@@ -51,13 +51,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        side = clamp(deadZone(side,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxTurnSpeed;
-        forward = -clamp(deadZone(forward,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxSpeed;
+        double s = clamp(deadZone(side,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxTurnSpeed;
+        double f = -clamp(deadZone(forward,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxSpeed;
 
-        DifferentialDriveWheelSpeeds s = kinematics.toWheelSpeeds(new ChassisSpeeds(forward,0,side));
+        DifferentialDriveWheelSpeeds k = kinematics.toWheelSpeeds(new ChassisSpeeds(f,0,s));
         
-        leftLeader.set(TalonSRXControlMode.PercentOutput,pidLeft.calculate(getLeftSpeed(), s.leftMetersPerSecond));
-        rightLeader.set(TalonSRXControlMode.PercentOutput,pidRight.calculate(getRightSpeed(), s.rightMetersPerSecond));
+        leftLeader.set(TalonSRXControlMode.PercentOutput,pidLeft.calculate(getLeftSpeed(), k.leftMetersPerSecond));
+        rightLeader.set(TalonSRXControlMode.PercentOutput,pidRight.calculate(getRightSpeed(), k.rightMetersPerSecond));
     }
     @Override
     public void simulationPeriodic() {}
