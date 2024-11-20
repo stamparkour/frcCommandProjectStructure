@@ -52,7 +52,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         double s = clamp(deadZone(side,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxTurnSpeed;
-        double f = -clamp(deadZone(forward,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxSpeed;
+        double f = clamp(deadZone(forward,DrivetrainConstants.deadzone),1) * DrivetrainConstants.maxSpeed;
 
         DifferentialDriveWheelSpeeds k = kinematics.toWheelSpeeds(new ChassisSpeeds(f,0,s));
         

@@ -9,10 +9,11 @@ import frc.robot.drivetrain.DriveSetSideCommand;
 public class AutonomousState {
     public static Command getAutoCommand() {
         return new SequentialCommandGroup(
-            new DriveSetForwardCommand(5,0.2),
-            new DriveSetSideCommand(120,0.2),
+            new DriveSetForwardCommand(5,1),
+            new DriveSetSideCommand(120,1),
             new ToggleArmCommand(),
-            new DriveSetSideCommand(-30,0.2),
+            new DriveSetSideCommand(-30,1),
+            new ToggleArmCommand(),
             new DriveSetForwardCommand(-2,0.5)
         );
     }
